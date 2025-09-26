@@ -7,11 +7,20 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.13.16"
 
-libraryDependencies += guice
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test
+// Play 3.0 compatible dependencies
+libraryDependencies ++= Seq(
+  guice,
+  "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test,
+  
+  // Database dependencies for Play 3.0
+  "org.playframework" %% "play-slick" % "6.1.1",
+  "org.playframework" %% "play-slick-evolutions" % "6.1.1",
+  "com.h2database" % "h2" % "2.1.214"
+)
 
-// Adds additional packages into Twirl
-//TwirlKeys.templateImports += "com.ahqaccenture.controllers._"
-
-// Adds additional packages into conf/routes
-// play.sbt.routes.RoutesKeys.routesImport += "com.ahqaccenture.binders._"
+// Scala compiler options
+scalacOptions ++= Seq(
+  "-feature",
+  "-deprecation",
+  "-Xfatal-warnings"
+)
